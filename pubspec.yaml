@@ -1,0 +1,48 @@
+name: bookreader
+description: "A new Flutter project."
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.7.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  path_provider: ^2.1.4  # Последняя версия
+  shared_preferences: ^2.2.2  # Последняя версия
+
+  # Firebase dependencies
+  firebase_core: ^2.15.0          # Core Firebase SDK
+  firebase_auth: ^4.15.0         # Firebase Authentication
+  cloud_firestore: ^4.15.0       # Firestore database
+  firebase_storage: ^11.5.0      # Firebase Storage for file uploads
+
+  # State management
+  provider: ^6.1.2               # State management solution
+
+  # UI components
+  carousel_slider: ^4.2.1        # Image slider/carousel
+  cached_network_image: ^3.2.3   # Caching network images for better performance
+
+  # Utilities
+  intl: ^0.18.1                  # Internationalization and date formatting
+
+  # Additional dependencies (optional but recommended)
+  fluttertoast: ^8.2.2           # Toast messages for user feedback
+ # shared_preferences: ^2.2.0     # Local storage for caching/offline data
+  connectivity_plus: ^5.0.2      # Check internet connectivity for offline mode
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+
+
+flutter:
+
+  uses-material-design: true

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "119902290898",
+    "project_id": "bookreader-f7673",
+    "storage_bucket": "bookreader-f7673.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:119902290898:android:a98e0dd208e43ff026fe0b",
+        "android_client_info": {
+          "package_name": "com.example.bookreader"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCppQ5yAP7mBz2U-gCqN_CoFvpS3h2ntkk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
