@@ -15,10 +15,10 @@ dependencies:
   shared_preferences: ^2.2.2  # Последняя версия
 
   # Firebase dependencies
-  firebase_core: ^2.15.0          # Core Firebase SDK
-  firebase_auth: ^4.15.0         # Firebase Authentication
-  cloud_firestore: ^4.15.0       # Firestore database
-  firebase_storage: ^11.5.0      # Firebase Storage for file uploads
+  firebase_core: ^3.9.0          # Core Firebase SDK
+  firebase_auth: ^5.4.0         # Firebase Authentication
+  cloud_firestore: ^5.6.0       # Firestore database
+  firebase_storage: ^12.4.4      # Firebase Storage for file uploads
 
   # State management
   provider: ^6.1.2               # State management solution
@@ -39,7 +39,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  pigeon: ^10.0.0
   flutter_lints: ^5.0.0
 
 

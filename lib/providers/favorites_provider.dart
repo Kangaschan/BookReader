@@ -1,51 +1,33 @@
-import 'package:flutter/foundation.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../model/user.dart';
+import 'auth_provider.dart';
 
 class FavoritesProvider with ChangeNotifier {
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
-  final String _favoritesCollection = 'favorites';
-  Map<String, bool> _favorites = {};
+  List<String> get favorites =>
+      Provider.of<AuthProvider>(context, listen: false).user?.favorites ?? [];
 
-  Map<String, bool> get favorites => _favorites;
+  BuildContext context;
 
-  Future<void> loadFavorites(String userId) async {
-    try {
-      final snapshot = await _db
-          .collection('users')
-          .doc(userId)
-          .collection(_favoritesCollection)
-          .get();
-      _favorites = {for (var doc in snapshot.docs) doc.id: true};
-      notifyListeners();
-    } catch (error) {
-      throw Exception('Failed to load favorites: $error');
+  FavoritesProvider(this.context);
+
+  Future<void> toggleFavorite(String bookId) async {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final user = authProvider.user;
+    if (user == null) return;
+
+    final newFavorites = List<String>.from(user.favorites ?? []);
+    if (newFavorites.contains(bookId)) {
+      newFavorites.remove(bookId);
+    } else {
+      newFavorites.add(bookId);
     }
+
+    final updatedUser = user.copyWith(favorites: newFavorites);
+    await authProvider.updateProfile(updatedUser);
   }
 
-  bool isFavorite(String bookId) => _favorites.containsKey(bookId);
-
-  Future<void> toggleFavorite(String userId, String bookId) async {
-    try {
-      if (_favorites.containsKey(bookId)) {
-        await _db
-            .collection('users')
-            .doc(userId)
-            .collection(_favoritesCollection)
-            .doc(bookId)
-            .delete();
-        _favorites.remove(bookId);
-      } else {
-        await _db
-            .collection('users')
-            .doc(userId)
-            .collection(_favoritesCollection)
-            .doc(bookId)
-            .set({});
-        _favorites[bookId] = true;
-      }
-      notifyListeners();
-    } catch (error) {
-      throw Exception('Failed to toggle favorite: $error');
-    }
+  bool isFavorite(String bookId) {
+    return favorites.contains(bookId);
   }
 }

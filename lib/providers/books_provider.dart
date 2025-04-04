@@ -12,13 +12,16 @@ class BooksProvider with ChangeNotifier {
   List<Book> _filteredBooks = [];
   bool _isLoading = false;
   double? _minRating;
+  String? _selectedGenre; // Новое поле для выбранного жанра
 
   List<Book> get books => _filteredBooks.isEmpty ? _books : _filteredBooks;
   bool get isLoading => _isLoading;
   double? get minRating => _minRating;
+  String? get selectedGenre => _selectedGenre; // Геттер для выбранного жанра
 
   Future<void> loadBooks() async {
     try {
+      print('Loading books...');
       _isLoading = true;
       notifyListeners();
 
@@ -36,16 +39,75 @@ class BooksProvider with ChangeNotifier {
             .get(const GetOptions(source: Source.cache));
       }
 
-      _books = querySnapshot.docs.map((doc) => Book.fromFirestore(doc)).toList();
+      _books.clear(); // Очищаем список перед загрузкой новых данных
+
+      for (var doc in querySnapshot.docs) {
+
+        final data = doc.data() as Map<String, dynamic>; // Явное привение типа
+
+        try {
+
+          _books.add(Book.fromFirestore(doc as DocumentSnapshot<Object?>)); // Передаем data, а не doc
+        } catch (e) {
+          print('Error parsing book ${doc.id}: $e');
+        }
+      }
+
       _filteredBooks = [];
       _isLoading = false;
       notifyListeners();
     } catch (error) {
       _isLoading = false;
       notifyListeners();
+      print('Error loading books: $error');
       throw Exception('Failed to load books: $error');
     }
   }
+  // Future<void> loadBooks() async {
+  //   try {
+  //     print('Loading books...');
+  //     _isLoading = true;
+  //     print('Books loaded: ${_books.length}');
+  //     for (var book in _books) {
+  //       print('Book title: ${book.title}, Author: ${book.author}');
+  //     }
+  //     notifyListeners();
+  //
+  //     QuerySnapshot querySnapshot;
+  //
+  //     try {
+  //       querySnapshot = await _firestore
+  //           .collection(_booksCollection)
+  //           .orderBy('title')
+  //           .get(const GetOptions(source: Source.server));
+  //     } catch (e) {
+  //       querySnapshot = await _firestore
+  //           .collection(_booksCollection)
+  //           .orderBy('title')
+  //           .get(const GetOptions(source: Source.cache));
+  //     }
+  //
+  //     for (var doc in querySnapshot.docs) {
+  //       final rawData = doc.data();
+  //       print('Raw data from Firestore: $rawData');
+  //
+  //       if (rawData is Map<String, dynamic>) {
+  //         _books.add(Book.fromFirestore(doc));
+  //       } else {
+  //         print('Invalid data format for document ID: ${doc.id}');
+  //       }
+  //     }
+  //
+  //     _filteredBooks = [];
+  //     _isLoading = false;
+  //     notifyListeners();
+  //   } catch (error) {
+  //     _isLoading = false;
+  //     notifyListeners();
+  //     print('Error loading books: $error');
+  //     throw Exception('Failed to load books: $error');
+  //   }
+  // }
 
   void searchBooks(String query) {
     if (query.isEmpty) {
@@ -95,10 +157,10 @@ class BooksProvider with ChangeNotifier {
       final reviewId = FirebaseFirestore.instance.collection('reviews').doc().id;
 
       final review = Review(
-        id: reviewId,
+        id: reviewId, // Теперь это String
         userId: user.uid,
         bookId: bookId,
-        userName: 'Anonymous', // Здесь можно взять имя из профиля пользователя
+        userName: user.displayName ?? 'Anonymous', // Используем имя пользователя
         text: text,
         rating: rating,
         createdAt: DateTime.now(),
