@@ -183,15 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   .map((genre) => DropdownMenuItem(value: genre, child: Text(genre)))
                   .toList(),
             ),
-            Slider(
-              value: booksProvider.minRating ?? 0.0,
-              min: 0.0,
-              max: 5.0,
-              divisions: 5,
-              label: 'Min Rating: ${booksProvider.minRating?.toStringAsFixed(1) ?? '0.0'}',
-              onChanged: (value) => booksProvider.filterBooks(minRating: value),
-            ),
-          ],
+                  ],
         ),
       ),
     );

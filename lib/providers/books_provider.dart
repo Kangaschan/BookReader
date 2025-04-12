@@ -63,52 +63,6 @@ class BooksProvider with ChangeNotifier {
       throw Exception('Failed to load books: $error');
     }
   }
-  // Future<void> loadBooks() async {
-  //   try {
-  //     print('Loading books...');
-  //     _isLoading = true;
-  //     print('Books loaded: ${_books.length}');
-  //     for (var book in _books) {
-  //       print('Book title: ${book.title}, Author: ${book.author}');
-  //     }
-  //     notifyListeners();
-  //
-  //     QuerySnapshot querySnapshot;
-  //
-  //     try {
-  //       querySnapshot = await _firestore
-  //           .collection(_booksCollection)
-  //           .orderBy('title')
-  //           .get(const GetOptions(source: Source.server));
-  //     } catch (e) {
-  //       querySnapshot = await _firestore
-  //           .collection(_booksCollection)
-  //           .orderBy('title')
-  //           .get(const GetOptions(source: Source.cache));
-  //     }
-  //
-  //     for (var doc in querySnapshot.docs) {
-  //       final rawData = doc.data();
-  //       print('Raw data from Firestore: $rawData');
-  //
-  //       if (rawData is Map<String, dynamic>) {
-  //         _books.add(Book.fromFirestore(doc));
-  //       } else {
-  //         print('Invalid data format for document ID: ${doc.id}');
-  //       }
-  //     }
-  //
-  //     _filteredBooks = [];
-  //     _isLoading = false;
-  //     notifyListeners();
-  //   } catch (error) {
-  //     _isLoading = false;
-  //     notifyListeners();
-  //     print('Error loading books: $error');
-  //     throw Exception('Failed to load books: $error');
-  //   }
-  // }
-
   void searchBooks(String query) {
     if (query.isEmpty) {
       _filteredBooks = [];

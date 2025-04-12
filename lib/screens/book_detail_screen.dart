@@ -249,7 +249,7 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                             setState(() {
                               _rating = 0;
                             });
-
+                            //reviewsProvider.up
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text('Review added successfully')),
                             );
