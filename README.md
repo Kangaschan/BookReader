@@ -1,16 +1,23 @@
 # bookreader
 
-A new Flutter project.
+Educational flutter project.
 
 ## Getting Started
+  
+  1. Аутентификация пользователей:
+   - Использовать Firebase Authentication для регистрации и аутентификации пользователей. Любое взаимодействие с приложением возможно только для АВТОРИЗИРОВАННЫХ пользователей.
 
-This project is a starting point for a Flutter application.
+2. Экран "Список объектов":
+   - Приложение должно отображать список однородных объектов (например, книг, фильмов, отелей и т.д.). В списке должно быть минимум 30 объектов.
+   - При нажатии на объект пользователям должна предоставляться детальная информация об объекте. Эта информация должна включать описание и слайдер с изображениями, возможность добавления в избранное и т.д.
+   - Для минимум 5 объектов в коллекции должно быть предоставлено минимум 7 изображений каждого.
 
-A few resources to get you started if this is your first Flutter project:
+3. Экран 'Избранное':
+   - Пользователи должны иметь возможность добавлять объекты в избранное и удалять их оттуда.
+   - Данные об объектах в избранном должны храниться в удаленной базе данных (Firebase).
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+4. Экран "Профиль пользователя":
+   - Должен содержать минимум 10 информационных полей (например, имя, дата рождения, описание и т.д.) и выйти из системы (Log out)
+5. Интеграция с Firebase:
+   - Все данные (профили пользователей, информация об объектах) должны храниться на Firebase.
+   - Должна быть реализована функциональность создания и удаления пользователей.
